@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.PictureDao" >
+    <!-- 获取记录总数 -->
+    <select id="selectCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM picture WHERE pic_del=0
+    </select>
+
+    <!-- 获取所有图片信息 -->
+    <select id="selectAllPicture" resultType="com.xk.ziyu.entity.Picture">
+        select * from picture WHERE pic_del=0 ORDER BY pic_id DESC
+    </select>
+
+    <!-- 获取首页 Banner 展示的图片，时间倒序获取前三条 -->
+    <select id="selectAdsPicture" resultType="com.xk.ziyu.entity.Picture">
+        SELECT * FROM picture WHERE pic_del=0 AND pic_type='首页轮播图' AND pic_is_show='是' ORDER BY pic_id DESC LIMIT 0, 3;
+    </select>
+
+    <!-- 获取查询的总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM picture WHERE pic_del=0 AND pic_name LIKE CONCAT('%', #{picname}, '%') AND pic_type = #{pictype} AND pic_is_show = #{picshow}
+    </select>
+
+    <!-- 根据关键字查找图片：1. 图片名称  2. 图片类型  3. 图片是否展示 -->
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.Picture">
+        SELECT * FROM picture WHERE pic_del=0 AND pic_name LIKE CONCAT('%',#{picname} ,'%') AND pic_type = #{pictype} AND pic_is_show = #{picshow} ORDER BY pic_id DESC
+    </select>
+
+    <insert id="insertPic">
+        INSERT INTO picture(pic_name, pic_type, pic_is_show, pic_link, pic_path, pic_update_date) VALUES (#{name}, #{type}, #{show}, #{link}, #{path}, #{date})
+    </insert>
+
+    <update id="delPic">
+        UPDATE picture SET pic_del=1 WHERE pic_id=#{id}
+    </update>
+
+    <select id="selectPic" resultType="com.xk.ziyu.entity.Picture">
+        SELECT * FROM picture WHERE pic_id = #{id}
+    </select>
+
+    <update id="upPic">
+        UPDATE picture SET pic_name=#{name}, pic_type=#{type}, pic_is_show=#{show}, pic_link=#{link}, pic_update_date=#{date} WHERE pic_id=#{id}
+    </update>
+</mapper>

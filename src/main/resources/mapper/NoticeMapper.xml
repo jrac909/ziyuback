@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.NoticeDao" >
+    <!-- 获取公告总记录数 -->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM notice WHERE notice_del=0
+    </select>
+    <select id="selectAllNotice" resultType="com.xk.ziyu.entity.Notice">
+        select * from notice WHERE notice_del=0 ORDER BY notice_id DESC
+    </select>
+    <!-- 查询公告总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM notice WHERE notice_del=0 AND notice_title LIKE CONCAT('%', #{name}, '%')
+    </select>
+    <!-- 查询公告 -->
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.Notice">
+        SELECT * FROM notice WHERE notice_del=0 AND notice_title LIKE CONCAT('%', #{name}, '%') ORDER BY notice_id DESC
+    </select>
+    <select id="get" resultType="com.xk.ziyu.entity.Notice">
+        SELECT * FROM notice WHERE notice_id = #{id}
+    </select>
+    <update id="del">
+        UPDATE notice SET notice_del=1 WHERE notice_id=#{id}
+    </update>
+    <insert id="add">
+        INSERT INTO notice(notice_title, notice_content, notice_create_date) VALUES (#{noticeTitle}, #{noticeContent}, #{date})
+    </insert>
+    <!-- 获取最新八条公告 -->
+    <select id="selectLastNotice" resultType="com.xk.ziyu.entity.Notice">
+        SELECT * FROM notice ORDER BY notice_create_date DESC LIMIT 0, #{len}
+    </select>
+</mapper>

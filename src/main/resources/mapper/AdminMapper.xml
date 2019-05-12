@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.AdminDao" >
+    <select id="selectAllAdmin" resultType="com.xk.ziyu.entity.Admin">
+        select * from admin;
+    </select>
+    <!-- 根据管理员账号查询管理员信息 -->
+    <select id="selectByAccount" resultType="com.xk.ziyu.entity.Admin">
+        SELECT * FROM admin WHERE admin_account = #{account}
+    </select>
+</mapper>

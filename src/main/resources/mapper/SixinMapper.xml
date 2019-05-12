@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.SixinDao" >
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sixin
+    </select>
+    <select id="selectAll" resultType="com.xk.ziyu.entity.Sixin">
+        SELECT * FROM sixin ORDER BY sx_id DESC
+    </select>
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sixin WHERE sx_user_id LIKE CONCAT('%', #{name}, '%') OR sx_user_name LIKE CONCAT('%', #{name}, '%') OR sx_content LIKE CONCAT('%', #{name}, '%')
+    </select>
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.Sixin">
+        SELECT * FROM sixin WHERE sx_user_id LIKE CONCAT('%', #{name}, '%') OR sx_user_name LIKE CONCAT('%', #{name}, '%') OR sx_content LIKE CONCAT('%', #{name}, '%')  ORDER BY sx_id DESC
+    </select>
+    <select id="get" resultType="com.xk.ziyu.entity.Sixin">
+        SELECT * FROM sixin WHERE sx_id = #{id}
+    </select>
+</mapper>

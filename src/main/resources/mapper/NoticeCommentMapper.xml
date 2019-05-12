@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.NoticeCommentDao" >
+    <!-- 获取公告评论总记录数 -->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM notice_comment WHERE nc_del=0
+    </select>
+    <select id="selectList"  resultType="com.xk.ziyu.entity.NoticeComment">
+        SELECT * FROM notice_comment WHERE nc_del=0 ORDER BY nc_id DESC
+    </select>
+    <!-- 查询公告评论总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM notice_comment WHERE nc_del=0 AND (nc_user_id LIKE CONCAT('%', #{name}, '%') OR nc_notice_id LIKE CONCAT('%', #{name}, '%') OR nc_content LIKE CONCAT('%', #{name}, '%'))
+    </select>
+    <!-- 查询评论 -->
+    <select id="selectByKeywords"  resultType="com.xk.ziyu.entity.NoticeComment">
+        SELECT * FROM notice_comment WHERE nc_del=0 AND (nc_user_id LIKE CONCAT('%', #{name}, '%') OR nc_notice_id LIKE CONCAT('%', #{name}, '%') OR nc_content LIKE CONCAT('%', #{name}, '%')) ORDER BY nc_id DESC
+    </select>
+    <select id="get"  resultType="com.xk.ziyu.entity.NoticeComment">
+        SELECT * FROM notice_comment WHERE nc_id = #{id}
+    </select>
+    <update id="del">
+        UPDATE notice_comment SET nc_del=1 WHERE nc_id=#{id}
+    </update>
+</mapper>

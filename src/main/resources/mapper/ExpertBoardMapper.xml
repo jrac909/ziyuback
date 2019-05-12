@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.ExpertBoardDao" >
+    <select id="selectAllExpertBoard" resultType="com.xk.ziyu.entity.ExpertBoard">
+        select * from expert_board;
+    </select>
+    <!-- 获取专家个人中心留言板内容 -->
+    <select id="get" resultType="com.xk.ziyu.entity.form.ExpertBoardUserCon" parameterType="java.lang.Integer">
+        SELECT * FROM expert_board eb LEFT JOIN user u ON eb.eb_user_id = u.user_id WHERE eb.eb_expert_id=#{expertId} AND eb.eb_del=0
+    </select>
+    <!-- 删除留言/本质是修改删除状态 -->
+    <update id="del" parameterType="java.lang.Integer">
+        UPDATE expert_board SET eb_del=1 WHERE eb_id=#{ebId}
+    </update>
+    <!-- 专家回复 -->
+    <insert id="addReply">
+        INSERT INTO expert_reply(er_comment_id, er_expert_id, er_content, er_create_date) VALUES (#{erCommentId}, #{expertId}, #{content}, #{date})
+    </insert>
+    <!-- 获取所有专家回复 -->
+    <select id="listReply" resultType="com.xk.ziyu.entity.ExpertReply">
+        SELECT * FROM expert_reply WHERE er_del=0
+    </select>
+    <!-- 获取指定ID专家回复 -->
+    <select id="getReply" resultType="com.xk.ziyu.entity.ExpertReply">
+        SELECT * FROM expert_reply WHERE er_expert_id=#{expertId} AND er_del=0
+    </select>
+    <!-- 删除回复 -->
+    <update id="delReply" parameterType="java.lang.Integer">
+        UPDATE expert_reply SET er_del=1 WHERE er_id=#{id}
+    </update>
+</mapper>

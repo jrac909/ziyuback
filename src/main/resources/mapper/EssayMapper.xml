@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.EssayDao" >
+    <!-- 获取文章总记录数 -->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM essay WHERE essay_del=0
+    </select>
+    <!-- 获取当前页面文章 -->
+    <select id="selectAllEssay" resultType="com.xk.ziyu.entity.Essay">
+        select * from essay WHERE essay_del=0 ORDER BY essay_id DESC
+    </select>
+    <!-- 查询文章总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM essay WHERE essay_del=0 AND (essay_title LIKE CONCAT('%', #{name}, '%') OR essay_user_id LIKE CONCAT('%', #{name}, '%'))
+    </select>
+    <!-- 查询文章 -->
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.Essay">
+        SELECT * FROM essay WHERE essay_del=0 AND (essay_title LIKE CONCAT('%', #{name}, '%') OR essay_user_id LIKE CONCAT('%', #{name}, '%')) ORDER BY essay_id DESC
+    </select>
+    <select id="selectEssay" resultType="com.xk.ziyu.entity.Essay">
+        SELECT * FROM essay WHERE essay_id = #{id}
+    </select>
+    <update id="delEssay">
+        UPDATE essay SET essay_del=1 WHERE essay_id=#{id}
+    </update>
+    <!-- 获取收藏数前3的文章 -->
+    <select id="selectHotEssay"  resultType="com.xk.ziyu.entity.Essay">
+        SELECT * FROM essay ORDER BY essay_collect_count DESC, essay_create_date DESC LIMIT 0, #{len}
+    </select>
+    <!-- 获取当前页面文章（按收藏） -->
+    <select id="selectAllByCollect" resultType="com.xk.ziyu.entity.Essay">
+        select * from essay WHERE essay_del=0 ORDER BY essay_collect_count DESC
+    </select>
+    <select id="getTopList" resultType="com.xk.ziyu.entity.Essay">
+        SELECT * FROM essay WHERE essay_user_id=#{userId} AND essay_del=0 ORDER BY essay_create_date DESC LIMIT 0, #{len}
+    </select>
+</mapper>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.EsComUserConDao" >
+    <select id="selectAll" resultType="com.xk.ziyu.entity.EsComUserCon">
+        SELECT * FROM essay_board eb LEFT JOIN user u ON eb.eb_user_id=u.user_id WHERE eb.eb_essay_id=#{essayId} AND eb.eb_del=0 AND u.user_del=0 ORDER BY eb.eb_create_date DESC
+    </select>
+</mapper>

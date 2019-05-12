@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.QuestionReplyUserDao" >
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question_reply_user WHERE qru_del=0
+    </select>
+    <select id="selectAll" resultType="com.xk.ziyu.entity.QuestionReplyUser">
+        SELECT * FROM question_reply_user WHERE qru_del=0 ORDER BY qru_id DESC
+    </select>
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question_reply_user WHERE qru_del=0 AND (qru_user_id LIKE CONCAT('%', #{name}, '%') OR qru_comment_id LIKE CONCAT('%', #{name}, '%') OR qru_ques_id LIKE CONCAT('%', #{name}, '%') OR qru_content LIKE CONCAT('%', #{name}, '%'))
+    </select>
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.QuestionReplyUser">
+        SELECT * FROM question_reply_user WHERE qru_del=0 AND (qru_user_id LIKE CONCAT('%', #{name}, '%') OR qru_comment_id LIKE CONCAT('%', #{name}, '%') OR qru_ques_id LIKE CONCAT('%', #{name}, '%') OR qru_content LIKE CONCAT('%', #{name}, '%')) ORDER BY qru_id DESC
+    </select>
+    <select id="get" resultType="com.xk.ziyu.entity.QuestionReplyUser">
+        SELECT * FROM question_reply_user WHERE qru_id = #{id}
+    </select>
+    <update id="del">
+        UPDATE question_reply_user SET qru_del=1 WHERE qru_id=#{id}
+    </update>
+</mapper>

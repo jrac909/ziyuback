@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.QuestionDao" >
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question WHERE ques_del=0
+    </select>
+    <select id="selectAll" resultType="com.xk.ziyu.entity.Question">
+        select * from question WHERE ques_del=0 ORDER BY ques_id DESC
+    </select>
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question WHERE ques_del=0 AND ques_tag = #{type} AND (ques_title LIKE CONCAT('%', #{name}, '%') OR ques_user_id LIKE CONCAT('%', #{name}, '%'))
+    </select>
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.Question">
+        SELECT * FROM question WHERE ques_del=0 AND ques_tag = #{type} AND (ques_title LIKE CONCAT('%', #{name}, '%') OR ques_user_id LIKE CONCAT('%', #{name}, '%')) ORDER BY ques_id DESC
+    </select>
+    <select id="get" resultType="com.xk.ziyu.entity.Question">
+        SELECT * FROM question WHERE ques_id = #{id}
+    </select>
+    <update id="del">
+        UPDATE question SET ques_del=1 WHERE ques_id=#{id}
+    </update>
+    <insert id="addQues">
+        INSERT INTO question(ques_user_id, ques_title, ques_content, ques_create_date, ques_niming, ques_tag) VALUES (#{userId}, #{title}, #{content}, #{date},
+        #{niming}, #{tag})
+    </insert>
+    <select id="getTopList" resultType="com.xk.ziyu.entity.Question">
+        SELECT * FROM question WHERE ques_user_id=#{userId} AND ques_del=0 ORDER BY ques_create_date DESC LIMIT 0, #{len}
+    </select>
+</mapper>

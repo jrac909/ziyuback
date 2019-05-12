@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.QuesAnsUserDao" >
+    <!-- 获取总记录数 -->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ques_ans_user WHERE qau_del=0
+    </select>
+    <select id="selectAll" resultType="com.xk.ziyu.entity.QuesAnsUser">
+        SELECT * FROM ques_ans_user WHERE qau_del=0 ORDER BY qau_id DESC
+    </select>
+    <!-- 查询文章总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM ques_ans_user WHERE qau_del=0 AND (qau_user_id LIKE CONCAT('%', #{name}, '%') OR qau_ques_id LIKE CONCAT('%', #{name}, '%') OR qau_comment LIKE CONCAT('%', #{name}, '%'))
+    </select>
+    <!-- 查询文章 -->
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.QuesAnsUser">
+        SELECT * FROM ques_ans_user WHERE qau_del=0 AND (qau_user_id LIKE CONCAT('%', #{name}, '%') OR qau_ques_id LIKE CONCAT('%', #{name}, '%') OR qau_comment LIKE CONCAT('%', #{name}, '%')) ORDER BY qau_id DESC
+    </select>
+    <select id="get" resultType="com.xk.ziyu.entity.QuesAnsUser">
+        SELECT * FROM ques_ans_user WHERE qau_id = #{id}
+    </select>
+    <update id="del">
+        UPDATE ques_ans_user SET qau_del=1 WHERE qau_id=#{id}
+    </update>
+</mapper>

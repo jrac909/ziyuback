@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.QuestionTagDao" >
+    <!-- 获取标签总记录数 -->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question_tag WHERE qt_del=0
+    </select>
+    <select id="selectAll" resultType="com.xk.ziyu.entity.QuestionTag">
+        select * from question_tag WHERE qt_del=0 ORDER BY qt_id DESC
+    </select>
+    <!-- 查询标签总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM question_tag WHERE qt_del=0 AND qt_name LIKE CONCAT('%', #{name}, '%')
+    </select>
+    <!-- 查询标签 -->
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.QuestionTag">
+        SELECT * FROM question_tag WHERE qt_del=0 AND qt_name LIKE CONCAT('%', #{name}, '%') ORDER BY qt_id DESC
+    </select>
+    <update id="del">
+        UPDATE question_tag SET qt_del=1 WHERE qt_id=#{id}
+    </update>
+    <insert id="add">
+        INSERT INTO question_tag(qt_name, qt_create_date) VALUES (#{name}, #{date})
+    </insert>
+</mapper>
