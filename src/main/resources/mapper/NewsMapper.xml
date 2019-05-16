@@ -4,4 +4,23 @@
     <select id="selectAllNews" resultType="com.xk.ziyu.entity.News">
         select * from news;
     </select>
+    <!-- 指定id用户接收到的消息中有多少条未读 -->
+    <select id="getWeiduCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*) from news where new_receive_id = #{id} and new_type_r=0
+    </select>
+    <select id="getAllById" resultType="com.xk.ziyu.entity.News" parameterType="java.lang.Integer">
+        select * from news where new_send_id = #{id} or new_receive_id=#{id} ORDER BY new_date DESC
+    </select>
+    <!-- 取消两个用户之间所有的未读状态 -->
+    <update id="cancelWeidu">
+        update news set new_type_r=1 where new_send_id=#{id2} and new_receive_id=#{id1}
+    </update>
+    <!-- 查看当前两个用户聊天的记录 -->
+    <select id="getCurNews" resultType="com.xk.ziyu.entity.News">
+        select * from news where new_send_id=#{id1} and new_receive_id=#{id2} or new_send_id=#{id2} and new_receive_id=#{id1}
+    </select>
+    <!-- 发送一条新消息 -->
+    <insert id="addNews">
+        insert into news(new_send_id, new_receive_id, new_date, new_content, new_type, new_type_r, new_send_name, new_receive_name) values(#{id1}, #{id2}, now(), #{content}, #{type}, #{type2}, #{name1}, #{name2})
+    </insert>
 </mapper>

@@ -22,17 +22,29 @@ public class News {
      */
     private int newId;
     /**
+     * 消息发送
+     */
+    private String newSendName;
+    /**
      * 消息发送 id
      */
     private int newSendId;
+    /**
+     * 接收消息
+     */
+    private String newReceiveName;
     /**
      * 接收消息 id
      */
     private int newReceiveId;
     /**
-     * 消息类型
+     * 发送用户消息类型
      */
     private int newType;
+    /**
+     * 接收用户消息类型
+     */
+    private int newTypeR;
     /**
      * 消息内容
      */

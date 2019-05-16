@@ -25,10 +25,13 @@ public class WebSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam(value="userId")String userId) {
         this.session = session;
+
         webSockets.add(this);
+
         sessionPool.put(userId, session);
         System.out.println(userId+"userId");
         System.out.println("【websocket消息】有新的连接，总数为:"+webSockets.size());
+        System.out.println("Map大小："+sessionPool.size());
     }
 
     @OnClose
@@ -55,19 +58,36 @@ public class WebSocket {
     }
 
     // 此为单点消息--发送json对象数据
-    public int sendOneMessage(String userId, JSONObject message) {
+    public int sendOneMessage(String userId, String message) {
+        // String userId, JSONObject message
+        System.out.println("收到的消息："+userId+message);
         int ok = 2;//1成功
         Session session = sessionPool.get(userId);
         if (session != null) {
             try {
-                session.getAsyncRemote().sendText(message.toJSONString());
+                session.getAsyncRemote().sendText(message);
+                // session.getAsyncRemote().sendText(message.toJSONString());
+                System.out.println("接收成功");
                 ok = 1;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
         return ok;
         //        System.out.println("session：："+session);
 //        System.out.println("message：："+message.toJSONString());
+    }
+
+    public boolean receiveUserOnline(int id){
+        if (sessionPool.get(id+"") != null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void closePool(int id){
+        sessionPool.remove(id+"");
     }
 }
