@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xk.ziyu.dao.ShenheDao" >
+    <!-- 获取审核总记录数 -->
+    <select id="selectCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM shenhe
+    </select>
+    <!-- 查询所有审核 -->
+    <select id="selectAllShenhe" resultType="com.xk.ziyu.entity.Shenhe">
+        select * from shenhe
+    </select>
+    <!-- 查询审核总记录数 -->
+    <select id="selectQueryCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM shenhe WHERE status=#{name}
+    </select>
+    <!-- 查询公告 -->
+    <select id="selectByKeywords" resultType="com.xk.ziyu.entity.Shenhe">
+        SELECT * FROM shenhe WHERE status=#{name} ORDER BY id DESC
+    </select>
+    <!-- 插入一条审核记录 -->
+    <insert id="addshenhe">
+        insert into shenhe(quaLevel, reportingTime, occupation, certificateNo, zili, zilidesc, field, fielddesc, client, userid, begintime, photo, name, idcard) values(
+        #{quaLevel}, #{reportingTime}, #{occupation}, #{certificateNo}, #{zili}, #{zilidesc}, #{field},#{fielddesc},#{client},#{userid},now(), #{photo}, #{name},
+        #{idcard})
+    </insert>
+    <!-- 获取指定id用户的审核状态 -->
+    <select id="getStatus" resultType="com.xk.ziyu.entity.Shenhe">
+        select * from shenhe where userid=#{userid} order by begintime desc limit 1
+    </select>
+    <!-- 获取指定id用户的审核记录 -->
+    <select id="getShenheById" resultType="com.xk.ziyu.entity.Shenhe">
+        select * from shenhe where id=#{id}
+    </select>
+    <!-- 同意申请 -->
+    <update id="agree" parameterType="java.lang.Integer">
+        update shenhe set status=1 where id=1
+    </update>
+    <!-- 拒绝申请 -->
+    <update id="jujue" parameterType="java.lang.Integer">
+        update shenhe set status=2 where id=1
+    </update>
+</mapper>

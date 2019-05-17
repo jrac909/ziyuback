@@ -24,3 +24,7 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+# 配置本地静态图片资源访问
+spring.mvc.static-path-pattern: /images/**
+spring.resources.static-locations: file:F://zige/images/
